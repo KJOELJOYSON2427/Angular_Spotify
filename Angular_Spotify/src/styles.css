@@ -1,12 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
-
-body{
+*{
+  box-sizing: border-box;
+}
+html,body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #121212; /* Spotify’s dark theme */
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    width: 100%;
+    background-color: #121212;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
+
