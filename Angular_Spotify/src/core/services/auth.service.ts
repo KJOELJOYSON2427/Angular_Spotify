@@ -29,11 +29,24 @@ export class AuthService{
         console.log("socialGoogle");
         
         this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+        .then(user=>
+        {
+          this.user = user;
+        this.loggedIn = true;
+        console.log('Google user:', user);
+        }
+        ).catch(err=> console.error('Google login error:', err))
     }
 
 
      signInWithFacebook(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
+    .then(user => {
+        this.user = user;
+        this.loggedIn = true;
+        console.log('Facebook user:', user);
+      })
+      .catch(err => console.error('Facebook login error:', err));
   }
 
      signOut(): void {

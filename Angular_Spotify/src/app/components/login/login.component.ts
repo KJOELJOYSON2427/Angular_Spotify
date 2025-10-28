@@ -24,7 +24,7 @@ export class LoginComponent {
   loginWithGoogle(){
     console.log("loginGoogle");
     
-    this.authService.signInWithGoogle();
+    
   }
 
   loginWithFacebook() {

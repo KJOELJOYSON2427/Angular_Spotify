@@ -1,0 +1,107 @@
+/* ---- Buttons ---- */
+button {
+  width: 100%;
+  height: 45px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.3px;
+}
+
+button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* ---- Spotify Green Button ---- */
+.signup-btn {
+  background-color: #1db954;
+  color: #000;
+  border: none;
+}
+
+.signup-btn:hover {
+  background-color: #1ed760;
+}
+
+/* ---- Google Button ---- */
+.google-btn {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+.google-btn::before {
+  content: "";
+  display: inline-block;
+  background: url('../../../../assets/google-icon.svg') no-repeat center;
+  background-size: 18px;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+/* ---- Facebook Button ---- */
+.facebook-btn {
+  background-color: #1877f2;
+  color: #fff;
+  border: none;
+}
+
+.facebook-btn::before {
+  content: "";
+  display: inline-block;
+  background: url('../../../../assets/facebook-icon.svg') no-repeat center;
+  background-size: 18px;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+
+
+/* ---- Link ---- */
+.login-link {
+  display: block;
+  color: #b3b3b3;
+  font-size: 13px;
+  text-decoration: underline;
+  margin-top: 16px;
+  transition: color 0.3s ease;
+}
+
+.login-link:hover {
+  color: #fff;
+}
+
+/* ---- Mobile View Optimization ---- */
+@media screen and (max-width: 430px) {
+  .login-section img {
+    width: 70px;
+  }
+
+  .login-section h1 {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  button {
+    height: 44px;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .login-link {
+    font-size: 12px;
+  }
+}
