@@ -1,1 +1,10 @@
-<p>login works!</p>
+<h2>Log in to Spotify</h2>
+
+
+
+<app-social-login-buttons
+(google)="loginWithGoogle()"
+(facebook)="loginWithFacebook()"
+>
+</app-social-login-buttons>
+<button (click)="logout()" *ngIf="loggedIn">Sign out</button>
