@@ -1,1 +1,64 @@
-<p>signup works!</p>
+<div class="signup-container">
+  <h2>Create account</h2>
+   <!-- ✅ Bind the entire form here -->
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+   <!-- Step 1: Email -->
+      <div *ngIf="step === 1">
+    <label>What's your email?</label>
+    <input type="email" formControlName="email" placeholder="Enter your email" />
+    <small *ngIf="signupForm.get('email')?.invalid  && signupForm.get('email')?.touched">
+        Please enter a valid email
+    </small>
+    <button (click)="nextStep()" [disabled]="!signupForm.get('email')?.valid">Next</button>
+    </div> 
+
+   <!-- Step 2: Password -->
+  <div *ngIf="step === 2">
+    <label>Create a password</label>
+    <input type="password" formControlName="password" placeholder="Enter password" />
+    <small>Use at least 8 characters.</small>
+    <div class="btn-group">
+      <button (click)="prevStep()">Back</button>
+      <button (click)="nextStep()" [disabled]="!signupForm.get('password')?.valid">Next</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Gender -->
+  <div *ngIf="step === 3">
+    <label>What's your gender?</label>
+    <input type="text" formControlName="gender" placeholder="Enter your gender" />
+    <div class="btn-group">
+      <button (click)="prevStep()">Back</button>
+      <button (click)="nextStep()" [disabled]="!signupForm.get('gender')?.valid">Next</button>
+    </div>
+  </div>
+
+
+  <!-- Step 4: Name + Terms -->
+  <div *ngIf="step === 4">
+    <label>What's your name?</label>
+    <input type="text" formControlName="name" placeholder="Enter your name" />
+
+
+     <div class="checkbox-group">
+      <label>
+        <input type="checkbox" formControlName="news" />
+        Send me news and offers
+      </label>
+      <label>
+        <input type="checkbox" formControlName="shareData" />
+        Share my registration data
+      </label>
+    </div>
+    <p>
+      By tapping “Create account”, you agree to the Spotify Terms of Use and Privacy Policy.
+    </p>
+
+    <div class="btn-group">
+      <button (click)="prevStep()">Back</button>
+      <button (click)="onSubmit()" [disabled]="!signupForm.get('name')?.valid">Create Account</button>
+    </div>
+    </div>
+</form>
+
+  </div>

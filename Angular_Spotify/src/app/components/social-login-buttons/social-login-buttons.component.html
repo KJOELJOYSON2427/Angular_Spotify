@@ -1,5 +1,7 @@
 <div class="social-buttons">
-  asl-google-signin-button></asl-google-signin-button>
-  <button class="google-btn" (click)="onGoogle()">Continue with Google</button>
+<asl-google-signin-button type="standard" size="large" *ngIf="user===null" (click)="onGoogle()">
+  continue 
+</asl-google-signin-button>
+
   <button class="facebook-btn" (click)="onFacebook()">Continue with Facebook</button>
 </div>
