@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup,ReactiveFormsModule,Validators} from "@angular/forms"
+import { SupabaseService } from '../../../core/services/superbase.service';
 @Component({
   selector: 'app-signup',
   imports: [CommonModule,ReactiveFormsModule],
@@ -12,7 +13,7 @@ export class SignupComponent {
 
    signupForm:FormGroup;
 
-   constructor(private fb: FormBuilder){
+   constructor(private fb: FormBuilder, private supabaseService: SupabaseService){
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
        password: ['', [Validators.required, Validators.minLength(8)]],
@@ -54,6 +55,21 @@ export class SignupComponent {
     if(this.signupForm.valid){
       console.log(this.signupForm.value);
       alert('Account Created Successfully!');
+    }
+    
+this.onSignup()
+   }
+
+   async onSignup(){
+    try{
+    await this.supabaseService.signUp(
+      this.signupForm.value.email!,
+       this.signupForm.value.password!,
+      this.signupForm.value.name!
+    )
+    console.log('Signup successful');
+    }catch(err:any){
+       console.error(err.message);
     }
    }
 }
