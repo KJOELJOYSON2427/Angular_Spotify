@@ -1,4 +1,4 @@
-<div class="signup-container">
+<div class="signup-container" [ngStyle]="progressStyles">
   <h2>Create account</h2>
    <!-- ✅ Bind the entire form here -->
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">

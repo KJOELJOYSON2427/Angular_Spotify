@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import  {environment}  from '../../environments.environment';
+import  {environment}  from '../../environments/environment';
 import { User } from '../models/user.model';
 import * as bcrypt from 'bcryptjs';
 import { jwtDecode } from 'jwt-decode';
@@ -8,7 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 // ------------------------------------------------------------------
 // Utility type – strips `password` from any object
 // ------------------------------------------------------------------
-type OmitPassword<T> = Omit<T, 'password'>;
+export type OmitPassword<T> = Omit<T, 'password'>;
 
 @Injectable({
   providedIn: 'root',

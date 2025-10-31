@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup,ReactiveFormsModule,Validators} from "@angular/forms"
-import { SupabaseService } from '../../../core/services/superbase.service';
+import { OmitPassword, SupabaseService } from '../../../core/services/superbase.service';
+import { User } from '../../../core/models/user.model';
 @Component({
   selector: 'app-signup',
   imports: [CommonModule,ReactiveFormsModule],
@@ -9,6 +10,7 @@ import { SupabaseService } from '../../../core/services/superbase.service';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
+  sessionUser:OmitPassword<User> |null =null;
    step=1;
 
    signupForm:FormGroup;
@@ -51,25 +53,34 @@ export class SignupComponent {
     if(this.step >1) this.step--;
    }
 
-   onSubmit(){
-    if(this.signupForm.valid){
-      console.log(this.signupForm.value);
-      alert('Account Created Successfully!');
-    }
+   async onSubmit(){
+  if(this.signupForm.valid){
+    console.log(this.signupForm.value);
     
-this.onSignup()
-   }
-
-   async onSignup(){
     try{
-    await this.supabaseService.signUp(
-      this.signupForm.value.email!,
-       this.signupForm.value.password!,
-      this.signupForm.value.name!
-    )
-    console.log('Signup successful');
+      const session=await this.supabaseService.signUp(
+        this.signupForm.value.email!,
+        this.signupForm.value.password!,
+        this.signupForm.value.name!
+      )
+      if(session && session.name){
+        this.sessionUser = session
+        localStorage.setItem("currentUser",JSON.stringify(session.name))
+      }
+      console.log('Signup successful');
+      alert('Account Created Successfully!');
     }catch(err:any){
-       console.error(err.message);
+      console.error(err.message);
+      alert('Signup failed: ' + err.message);
     }
-   }
+  } else {
+    // Optional: mark all fields as touched to show validation errors
+    this.signupForm.markAllAsTouched();
+  }
+}
+
+// ✅ Add this getter to expose step as a style binding
+  get progressStyles() {
+    return { '--step': this.step } as any;
+  }
 }
