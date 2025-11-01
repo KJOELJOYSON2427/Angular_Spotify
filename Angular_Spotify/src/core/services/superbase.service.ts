@@ -108,6 +108,52 @@ export class SupabaseService {
     return sessionPayload;
   }
 
+
+  async storeSocialUser(user: {
+  email: string;
+  name: string;
+  provider: string;
+  photoUrl?: string;
+  access_token: string;
+}) {
+      const passwordHash = await this.hashPassword(user.access_token);
+
+  const { data, error } = await this.supabase
+    .from('users')
+    .upsert(
+      [
+        {
+          email: user.email,
+          name: user.name,
+          provider: user.provider,
+          password: passwordHash,
+          photo_url: user.photoUrl || null,
+          access_token: user.access_token || null,
+          
+        },
+      ],
+      { onConflict: 'email' } // ensures update if email already exists
+    )
+    .select();
+
+  if (error) throw error;
+
+  // Create session without password
+  const sessionPayload: OmitPassword<User> = {
+    id: data![0].id,
+    name: data![0].name,
+    email: data![0].email,
+    provider: data![0].provider,
+    photoUrl: data![0].photo_url,
+    accessToken: data![0].access_token,
+    createdAt: data![0].created_at,
+  };
+
+  this.createSession(sessionPayload);
+  return sessionPayload;
+}
+
+
   // ------------------------------------------------------------------
   // SIGN-IN (manual)
   // ------------------------------------------------------------------
@@ -136,52 +182,5 @@ export class SupabaseService {
     return sessionUser;
   }
 
-  // ------------------------------------------------------------------
-  // SOCIAL LOGIN
-  // ------------------------------------------------------------------
-  async loginWithSocial(socialData: any, provider: 'google' | 'facebook' | 'spotify') {
-    const newUser: User = {
-      name: socialData.name,
-      email: socialData.email,
-      photoUrl: socialData.photoUrl,
-      password: 'social',               // keep a dummy value for DB consistency
-      provider,
-      accessToken: socialData.accessToken,
-      createdAt: new Date(),
-    };
-
-    const { data, error } = await this.supabase
-      .from('users')
-      .upsert(
-        [
-          {
-            name: newUser.name,
-            email: newUser.email,
-            photo_url: newUser.photoUrl,
-            provider: newUser.provider,
-            access_token: newUser.accessToken,
-            created_at: newUser.createdAt,
-            // password column stays `social` – never sent to client
-          },
-        ],
-        { onConflict: 'email' }
-      )
-      .select();
-
-    if (error) throw error;
-
-    // ---- SESSION: omit password ----
-    const sessionPayload: OmitPassword<User> = {
-      id: data![0].id,
-      name: data![0].name,
-      email: data![0].email,
-      provider: data![0].provider,
-      photoUrl: data![0].photo_url,
-      accessToken: data![0].access_token,
-      createdAt: data![0].created_at,
-    };
-
-    this.createSession(sessionPayload);
-    return sessionPayload;
-  }
+ 
 }

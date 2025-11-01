@@ -14,7 +14,7 @@ export class SignupComponent {
    step=1;
 
    signupForm:FormGroup;
-
+ submitted = false;
    constructor(private fb: FormBuilder, private supabaseService: SupabaseService){
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -54,6 +54,8 @@ export class SignupComponent {
    }
 
    async onSubmit(){
+    if (this.submitted) return; // prevent double submission
+    this.submitted = true;
   if(this.signupForm.valid){
     console.log(this.signupForm.value);
     
@@ -69,13 +71,30 @@ export class SignupComponent {
       }
       console.log('Signup successful');
       alert('Account Created Successfully!');
+      // ✅ Reset form and step after successful signup
+      this.signupForm.reset();
+      this.step = 1;
+
+
+      for(let i=2; i<=4; i++){
+        switch(i){
+          case 2: this.signupForm.get('password')?.reset(); break;
+          case 3: this.signupForm.get('gender')?.reset(); break;
+          case 4: this.signupForm.get('name')?.reset(); break;
+        }
+      }
     }catch(err:any){
       console.error(err.message);
       alert('Signup failed: ' + err.message);
+
+      
+    }finally{
+      this.submitted = false;
     }
   } else {
     // Optional: mark all fields as touched to show validation errors
     this.signupForm.markAllAsTouched();
+    this.submitted = false;
   }
 }
 

@@ -111,12 +111,23 @@ button {
   font-weight: 700;
   font-size: 1rem;
   margin-top: 15px;
-  transition: all 0.3s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.3s ease;
   position: relative;
   overflow: hidden;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  user-select: none;
+  background-size: 200% auto;
+  transition: all 0.3s ease;
 }
+
+/* Refined ripple feel */
+button:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 10px rgba(29, 185, 84, 0.3);
+  transition: transform 0.05s ease;
+}
+
 
 button::before{
   content: '';
@@ -135,12 +146,10 @@ button:hover::before {
   height: 300px;
 }
 button:hover {
-  transform: translateY(-2px);
+  background-position: right center;
   box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
 }
-button:active {
-  transform: translateY(0);
-}
+
 
 button[disabled] {
   background: #333;
@@ -246,4 +255,12 @@ p {
   width: calc(25% * var(--step, 1));
   transition: width 0.4s ease;
   z-index: 1000;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  border: 2px solid #1db954;
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0px 1000px #2a2a2a inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
