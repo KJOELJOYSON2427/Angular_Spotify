@@ -1,0 +1,27 @@
+<nav class="mobile-sidebar">
+     <button class="nav-item"
+     
+     [class.active]="activeTab === 'home'"
+     (click)="setActive('home')"
+     >
+     <i class="fa fa-home"></i>
+      <span>Home</span>
+     </button>
+
+     <button 
+    class="nav-item"
+    [class.active]="activeTab === 'search'"
+    (click)="setActive('search')">
+    <i class="fa fa-search"></i>
+    <span>Search</span>
+  </button>
+
+
+  <button 
+    class="nav-item"
+    [class.active]="activeTab === 'library'"
+    (click)="setActive('library')">
+    <i class="fa fa-book"></i>
+    <span>Library</span>
+  </button>
+</nav>
