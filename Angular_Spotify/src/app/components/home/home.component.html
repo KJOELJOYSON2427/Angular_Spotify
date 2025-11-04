@@ -1,1 +1,32 @@
-<app-footer-or-sidebar></app-footer-or-sidebar>
+<div class="app-container">
+  <!-- ===== Header ===== -->
+  <header class="header">
+    <h2 class="greeting">{{ greeting }}</h2>
+    <i class="fas fa-cog settings-icon"></i>
+  </header>
+
+  <!-- ===== Quick Playlists Grid ===== -->
+  <section class="playlists">
+    <div *ngFor="let item of quickPlaylists" class="playlist-card">
+      <img [src]="item.image" alt="" class="playlist-cover" />
+      <p class="playlist-title">{{ item.title }}</p>
+    </div>
+  </section>
+
+  <!-- ===== Made For You Section ===== -->
+  <div class="section-made-for-you">
+    <h3 class="section-title">Made for you</h3>
+    <div class="playlists-scroll">
+      <div *ngFor="let item of madeForYou" class="playlist-card vertical">
+        <img [src]="item.image" alt="" class="playlist-cover" />
+        <div class="playlist-text">
+          <p class="playlist-title">{{ item.title }}</p>
+          <p class="playlist-subtitle">{{ item.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <app-footer-or-sidebar></app-footer-or-sidebar>
+</div>

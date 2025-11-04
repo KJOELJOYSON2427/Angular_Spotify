@@ -1,0 +1,148 @@
+/* ===== Global Container ===== */
+.app-container {
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  padding-bottom: 5rem; /* space for bottom nav */
+  overflow-x: hidden;
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1rem 0.75rem;
+}
+
+.greeting {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.settings-icon {
+  font-size: 1.2rem;
+  color: #b3b3b3;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.settings-icon:hover {
+  color: #fff;
+}
+
+/* ===== Quick Playlists Section ===== */
+.playlists {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  padding: 0 1rem;
+}
+
+.playlist-card {
+  background: #181818;
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.playlist-card:hover {
+  background: #282828;
+}
+
+.playlist-cover {
+  width: 45px;
+  height: 45px;
+  border-radius: 0.3rem;
+  object-fit: cover;
+}
+
+.playlist-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* ===== Section: Made For You ===== */
+.section-made-for-you {
+  margin-top: 1.5rem;
+  padding: 0 1rem;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+/* ===== Horizontal Scroll ===== */
+.playlists-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scroll-behavior: smooth;
+}
+
+.playlists-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.playlist-card {
+  flex-shrink: 0;
+  min-width: 130px;
+  background: #181818;
+  border-radius: 0.6rem;
+  padding: 0.75rem;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.playlist-card:hover {
+  background: #282828;
+}
+
+.playlist-cover {
+  width: 100%;
+  border-radius: 0.5rem;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+
+.playlist-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.2rem 0;
+  color: #fff;
+}
+
+.playlist-subtitle {
+  font-size: 0.75rem;
+  color: #b3b3b3;
+  margin: 0;
+}
+
+/* ===== Responsiveness ===== */
+@media (max-width: 600px) {
+  .greeting {
+    font-size: 1.3rem;
+  }
+
+  .playlist-card {
+    min-width: 120px;
+  }
+
+  .playlist-cover {
+    width: 100%;
+  }
+}
