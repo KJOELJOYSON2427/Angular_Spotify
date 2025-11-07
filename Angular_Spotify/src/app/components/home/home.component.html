@@ -1,32 +1,72 @@
 <div class="app-container">
-  <!-- ===== Header ===== -->
   <header class="header">
     <h2 class="greeting">{{ greeting }}</h2>
     <i class="fas fa-cog settings-icon"></i>
   </header>
 
-  <!-- ===== Quick Playlists Grid ===== -->
+  <!-- Quick Playlists Grid -->
   <section class="playlists">
-    <div *ngFor="let item of quickPlaylists" class="playlist-card">
-      <img [src]="item.image" alt="" class="playlist-cover" />
+    <div *ngFor="let item of quickPlaylists" class="playlist-card grid">
+      <img [src]="item.image" alt="" class="playlist-cover small" />
       <p class="playlist-title">{{ item.title }}</p>
     </div>
   </section>
 
-  <!-- ===== Made For You Section ===== -->
+  <!-- Made For You Section -->
   <div class="section-made-for-you">
     <h3 class="section-title">Made for you</h3>
     <div class="playlists-scroll">
-      <div *ngFor="let item of madeForYou" class="playlist-card vertical">
-        <img [src]="item.image" alt="" class="playlist-cover" />
-        <div class="playlist-text">
-          <p class="playlist-title">{{ item.title }}</p>
+      <div *ngFor="let item of madeForYou" class="playlist-card scroll">
+        <img [src]="item.image" alt="" class="playlist-cover large" />
+        <div class="playlist-info">
+          <p class="playlist-title large">{{ item.title }}</p>
           <p class="playlist-subtitle">{{ item.subtitle }}</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== Footer ===== -->
+<!-- Popular Playlists -->
+  <div class="section-made-for-you">
+    <h3 class="section-title">Popular Playlists</h3>
+    <div class="playlists-scroll">
+      <div *ngFor="let item of popularPlaylists" class="playlist-card scroll">
+        <img [src]="item.image" alt="" class="playlist-cover large" />
+        <div class="playlist-info">
+          <p class="playlist-title large">{{ item.title }}</p>
+          <p class="playlist-subtitle">{{ item.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popular Playlists -->
+   <div class="section-made-for-you">
+    <h3 class="section-title">Hot Songs</h3>
+
+    <div class="playlists-scroll">
+      <div *ngFor="let item of hotSongs" class="playlist-card scroll">
+        <img [src]="item.image" alt="" class="playlist-cover large" />
+        <div class="playlist-info">
+<p class="playlist-title large">{{ item.title }}</p>
+<p class="playlist-subtitle">{{ item.subtitle }}</p>
+        </div>
+
+      </div>
+    </div>
+   </div>
+<!-- Hollywood Blockbusters -->
+  <div class="section-made-for-you">
+    <h3 class="section-title">Hollywood Blockbusters</h3>
+    <div class="playlists-scroll">
+      <div *ngFor="let item of hollywoodBlockbusters" class="playlist-card scroll">
+        <img [src]="item.image" alt="" class="playlist-cover large" />
+        <div class="playlist-info">
+          <p class="playlist-title large">{{ item.title }}</p>
+          <p class="playlist-subtitle">{{ item.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
   <app-footer-or-sidebar></app-footer-or-sidebar>
 </div>
