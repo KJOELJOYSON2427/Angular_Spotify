@@ -10,9 +10,25 @@ import { SpotifyService } from '../../../core/services/spotify.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
-  constructor(private spotify: SpotifyService) {}
+  constructor(private spotifyService: SpotifyService) {}
   ngOnInit(): void {
-  
+    
+
+    this.spotifyService.getPopularPlaylists().subscribe({
+    next: (playlists) => {
+      this.popularPlaylists = playlists;
+      console.log(playlists);
+    },
+    error: (err) => console.error('Playlist error:', err)
+  });
+
+  this.spotifyService.getHotSongs().subscribe({
+    next: (songs) => {
+      this.hotSongs = songs;
+      console.log(songs);
+    },
+    error: (err) => console.error('Hot songs error:', err)
+  });
     this.setGreeting();
     
      
@@ -59,28 +75,9 @@ export class HomeComponent implements OnInit{
   ];
 
 
-  popularPlaylists = [
-    {  title: "Feelin' Good",
-       subtitle: 'Vibes to make your day better.', 
-       image: 'assets/feelin_good.jpg'
-       },
-    {
-       title: 'Pumped Pop', 
-       subtitle: 'Energetic hits all day.', 
-       image: 'assets/pumped_pop.jpg'
-       },
-    { 
-      title: 'Chill Mix', 
-      subtitle: 'Relax with smooth sounds.',
-       image: 'assets/chill_mix.jpg' 
-      },
-  ];
+  popularPlaylists:any[] = []
 
-   hotSongs = [
-    { title: 'Heat Waves', subtitle: 'Glass Animals', image: 'assets/heat_waves.jpg' },
-    { title: 'Stay', subtitle: 'The Kid LAROI, Justin Bieber', image: 'assets/stay.jpg' },
-    { title: 'Blinding Lights', subtitle: 'The Weeknd', image: 'assets/blinding_lights.jpg' },
-  ];
+   hotSongs: any[] =[]
 
   hollywoodBlockbusters = [
     { title: 'Interstellar OST', subtitle: 'Hans Zimmer', image: 'assets/interstellar.jpg' },
