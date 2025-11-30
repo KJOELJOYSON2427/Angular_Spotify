@@ -11,6 +11,7 @@ import { SpotifyService } from '../../../core/services/spotify.service';
 })
 export class HomeComponent implements OnInit{
   constructor(private spotifyService: SpotifyService) {}
+  popularPlaylists:any[] = []
   ngOnInit(): void {
     
 
@@ -22,10 +23,13 @@ export class HomeComponent implements OnInit{
     error: (err) => console.error('Playlist error:', err)
   });
 
-  this.spotifyService.getHotSongs().subscribe({
+  this.spotifyService.getAlbums().subscribe({
     next: (songs) => {
-      this.hotSongs = songs;
+      this.hotAlbums = songs;
       console.log(songs);
+      console.log(this.hotAlbums[0].name);
+console.log(this.hotAlbums[0].images[0].url);
+console.log(this.hotAlbums[0].artists[0].name);
     },
     error: (err) => console.error('Hot songs error:', err)
   });
@@ -75,9 +79,9 @@ export class HomeComponent implements OnInit{
   ];
 
 
-  popularPlaylists:any[] = []
+  
 
-   hotSongs: any[] =[]
+   hotAlbums: any[] =[]
 
   hollywoodBlockbusters = [
     { title: 'Interstellar OST', subtitle: 'Hans Zimmer', image: 'assets/interstellar.jpg' },

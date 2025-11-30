@@ -40,16 +40,16 @@
     </div>
   </div>
 
-  <!-- Popular Playlists -->
+  <!-- Popular Albums -->
    <div class="section-made-for-you">
-    <h3 class="section-title">Hot Songs</h3>
+    <h3 class="section-title">Hot Albums</h3>
 
     <div class="playlists-scroll">
-      <div *ngFor="let item of hotSongs" class="playlist-card scroll">
-        <img [src]="item.image" alt="" class="playlist-cover large" />
+      <div *ngFor="let item of hotAlbums" class="playlist-card scroll">
+        <img [src]="item.images[0].url" alt="" class="playlist-cover large" />
         <div class="playlist-info">
-<p class="playlist-title large">{{ item.title }}</p>
-<p class="playlist-subtitle">{{ item.subtitle }}</p>
+<p class="playlist-title large">{{ item.name }}</p>
+<p class="playlist-subtitle">{{ item.artists[0].name }}</p>
         </div>
 
       </div>

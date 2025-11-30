@@ -53,7 +53,7 @@ export class SpotifyService {
   }
 
   /** 🔹 Get New Releases (Hot Songs) */
-  getHotSongs() {
+  getAlbums() {
     return this.getAccessToken().pipe(
       switchMap((token) => {
         const url = `https://api.spotify.com/v1/browse/new-releases?country=IN&limit=10`;
