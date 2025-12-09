@@ -22,6 +22,18 @@ export class HomeComponent implements OnInit{
     },
     error: (err) => console.error('Playlist error:', err)
   });
+  
+   //this is popular global 50 paylist
+   this.spotifyService.getPopularGlobal50Songs().subscribe({
+    next:(popular50) =>{
+      this.Global_Top_50 = popular50;
+      console.log("This the global 50"  , popular50)
+    },
+    error: (err) => console.error('Global50 error:', err)
+   })
+
+
+
 
   this.spotifyService.getAlbums().subscribe({
     next: (songs) => {
@@ -57,7 +69,9 @@ console.log(this.hotAlbums[0].artists[0].name);
     { title: "Alan Gogoll", image: 'assets/alangogoll.jpg' },
     { title: "Small Doses with Amanda Seales", image: 'assets/smalldoses.jpg' },
   ];
+  
 
+  Global_Top_50=[]
 
 
    madeForYou = [

@@ -10,7 +10,7 @@ export class SpotifyService {
   private clientId: string = environment.clientId;
   private clientSecret: string = environment.clientSecret;
   private token: string = '';
-
+  private apiUrl ="https://api.spotify.com/v1"
   constructor(private http: HttpClient) {}
 
   /** 🔹 Fetch Access Token before API Calls */
@@ -66,5 +66,22 @@ export class SpotifyService {
         );
       })
     );
+  }
+
+  getPopularGlobal50Songs(){
+    return  this.getAccessToken().pipe(
+      switchMap((token: string) => {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      });
+       
+      return this.http.get<any>(
+         `${this.apiUrl}/playlists/3cEYpjA9oz9GiPac4AsH4n`,
+         {
+          headers
+         }
+      )
+      })
+    )
   }
 }
