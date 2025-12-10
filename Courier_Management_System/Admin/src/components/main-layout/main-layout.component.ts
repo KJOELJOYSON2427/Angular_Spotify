@@ -5,10 +5,13 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterOutlet } from '@angular/router';
 
 
-
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, NavbarComponent, MenuComponent, FooterComponent],
+  imports: [RouterOutlet, 
+    NavbarComponent, 
+    MenuComponent, 
+    FooterComponent  
+  ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css'
 })

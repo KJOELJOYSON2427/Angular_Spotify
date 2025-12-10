@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+@reference .;
+
+@tailwind utilities;
 
 * {
     box-sizing: border-box;
@@ -13,4 +16,8 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
+}
+
+.sidebar-item {
+    @apply flex items-center text-[18px] my-3 hover:text-[#E9EB77] cursor-pointer;
 }
