@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { NgIf } from "../../../../node_modules/@angular/common/common_module.d-NEF7UaHr";
+
 
 @Component({
   selector: 'app-stat-card',
   imports: [
-    NgIf
+    CommonModule
 ],
   templateUrl: './stat-card.component.html',
   styleUrl: './stat-card.component.css'

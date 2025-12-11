@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { StatCardComponent } from "./stat-card/stat-card.component";
 import { CommonModule } from "@angular/common";
-
+import { PiechartComponent } from "./piechart/piechart.component";
+import { RecentUsersComponent } from "./recent-users/recent-users.component";
 
 export interface Stats {
   title: string;
@@ -12,9 +13,9 @@ export interface Stats {
 
 @Component({
   selector: 'app-home',
-  imports: [StatCardComponent, 
-    CommonModule
-  ],
+  imports: [StatCardComponent,
+    CommonModule,
+    PiechartComponent, RecentUsersComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

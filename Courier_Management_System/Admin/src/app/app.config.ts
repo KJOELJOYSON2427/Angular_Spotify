@@ -13,6 +13,8 @@ import {
 } from '@ng-icons/material-icons/outline';
 
 import { routes } from './app.routes';
+import { provideCharts } from 'ng2-charts';
+import { BarController, PieController } from 'chart.js';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +24,12 @@ export const appConfig: ApplicationConfig = {
       
       
 
+    }),
+    provideCharts({
+      registerables: [
+        PieController,
+        BarController
+      ]
     })
   ]
 };
