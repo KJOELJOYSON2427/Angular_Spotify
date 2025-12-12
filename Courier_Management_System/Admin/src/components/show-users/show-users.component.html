@@ -1,1 +1,77 @@
-<p>show-users works!</p>
+<div class="parcel-container max-w-7xl mx-auto p-6 md:p-8">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+        All Parcels
+      </h2>
+      <p class="text-gray-500 text-sm">Manage and track your shipments</p>
+    </div>
+
+    <button class="new-btn px-5 py-2 rounded-lg text-white font-medium flex items-center gap-2">
+      <span class="text-lg">+</span> New Parcel
+    </button>
+  </div>
+
+  <!-- Simple Table -->
+  <div class="overflow-x-auto bg-white rounded-xl shadow-lg border border-gray-200">
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-100 text-left text-gray-700 text-sm font-semibold">
+        <tr>
+          <th class="p-4">SI.NO</th>
+          <th class="p-4">From</th>
+          <th class="p-4">To</th>
+          <th class="p-4">Sender</th>
+          <th class="p-4">Recipient</th>
+          <th class="p-4 text-right">Cost</th>
+          <th class="p-4">Note</th>
+          <th class="p-4 text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let parcel of parcels; let i = index"
+            class="row-anim border-b hover:bg-gray-50">
+          
+          <td class="p-4 text-black">{{i+1}}</td>
+
+          <td class="p-4 text-gray-900">{{ parcel.from }}</td>
+
+          <td class="p-4  text-gray-900">{{ parcel.to }}</td>
+
+          <td class="p-4 text-gray-900">{{ parcel.sendername }}</td>
+
+          <td class="p-4">
+            <span class="px-3 py-1 text-xs rounded-full  text-gray-900">
+              {{ parcel.recipientname }}
+            </span>
+          </td>
+
+          <td class="p-4 text-right">
+            <span class="cost-badge px-3 py-1 rounded-full text-white">
+              ${{ parcel.cost }}
+            </span>
+          </td>
+
+          <td class="p-4 text-gray-900 text-sm max-w-[180px] truncate">
+            {{ parcel.note }}
+          </td>
+
+          <td class="p-4 flex items-center justify-center gap-3">
+            <button class="action-btn text-blue-600 p-5 w-12 h-5">
+              <fa-icon [icon]="icons" class="mr-3"></fa-icon>
+            </button>
+          <button class="action-btn text-blue-600 p-5 w-12 h-5">
+              <fa-icon [icon]="edit" class="mr-3"></fa-icon>
+            </button>
+            <button class="action-btn text-blue-600 p-5 w-12 h-5">
+              <fa-icon [icon]="delete" class="mr-3"></fa-icon>
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
