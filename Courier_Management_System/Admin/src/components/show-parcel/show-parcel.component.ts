@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ShowParcelComponent {
   isViewMode = false;
  parcelForm!: FormGroup;
-
+  
   constructor(private fb: FormBuilder,
 
     private route: ActivatedRoute
@@ -42,7 +42,7 @@ export class ShowParcelComponent {
     }
   }
 
-
+    status:string ="Delivered"
   onSubmit(){
   if(this.parcelForm.invalid){
     this.parcelForm.markAllAsTouched();
