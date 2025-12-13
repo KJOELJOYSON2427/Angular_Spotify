@@ -1,1 +1,51 @@
-<p>register-user works!</p>
+<div class="user-wrapper">
+    <div class="user-card">
+           <h2 class="title">Create New User Account</h2> <!-- Changed title text -->
+      <form [formGroup]="userForm" (ngSubmit)="submit()">
+
+         <div class="input-group">
+            <!-- Add a placeholder icon div here -->
+            <div class="icon">👤</div> 
+            <input type="text" formControlName="fullname" required />
+            <label>Full Name</label>
+            <span class="bar"></span>
+        </div>
+
+      <div class="input-group">
+           <!-- Add a placeholder icon div here -->
+           <div class="icon">📧</div> 
+        <input type="email" formControlName="email" required />
+        <label>Email</label>
+        <span class="bar"></span>
+      </div>
+      
+      <!-- ... other inputs remain the same structure ... -->
+      <div class="input-group">
+        <div class="icon">📅</div> 
+        <input type="number" formControlName="age" />
+        <label>Age</label>
+        <span class="bar"></span>
+      </div>
+
+      <div class="input-group">
+        <div class="icon">🌍</div> 
+        <input type="text" formControlName="country" />
+        <label>Country</label>
+        <span class="bar"></span>
+      </div>
+
+      <div class="input-group">
+        <div class="icon">🏠</div> 
+        <input type="text" formControlName="address" />
+        <label>Address</label>
+        <span class="bar"></span>
+      </div>
+
+
+      <button type="submit" class="liquid-btn">
+        <span>Create Account</span>
+        <div class="liquid"></div>
+      </button>
+      </form>
+    </div>
+</div>

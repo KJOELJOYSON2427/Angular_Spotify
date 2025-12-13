@@ -9,7 +9,7 @@
       <p class="text-gray-500 text-sm">Manage and track your shipments</p>
     </div>
 
-    <button class="new-btn px-5 py-2 rounded-lg text-white font-medium flex items-center gap-2">
+    <button class="new-btn px-5 py-2 rounded-lg text-white font-medium flex items-center gap-2" routerLink="/newParcel">
       <span class="text-lg">+</span> New Parcel
     </button>
   </div>
@@ -22,6 +22,7 @@
           <th class="p-4">SI.NO</th>
           <th class="p-4">From</th>
           <th class="p-4">To</th>
+            <th class="p-4">Tracking Number</th>
           <th class="p-4">Sender</th>
           <th class="p-4">Recipient</th>
           <th class="p-4 text-right">Cost</th>
@@ -39,7 +40,7 @@
           <td class="p-4 text-gray-900">{{ parcel.from }}</td>
 
           <td class="p-4  text-gray-900">{{ parcel.to }}</td>
-
+           <td class="p-4 text-gray-900">{{ parcel.trackingNumber }}</td>
           <td class="p-4 text-gray-900">{{ parcel.sendername }}</td>
 
           <td class="p-4">
@@ -59,10 +60,15 @@
           </td>
 
           <td class="p-4 flex items-center justify-center gap-3">
-            <button class="action-btn text-blue-600 p-5 w-12 h-5">
+            <button class="action-btn text-blue-600 p-5 w-12 h-5"
+            [routerLink]="['/parcel/view/' + parcel.trackingNumber]"
+            >
               <fa-icon [icon]="icons" class="mr-3"></fa-icon>
             </button>
-          <button class="action-btn text-blue-600 p-5 w-12 h-5">
+          <button class="action-btn text-blue-600 p-5 w-12 h-5"
+          [routerLink]="['/parcel/edit/' + parcel.trackingNumber]"
+          >
+
               <fa-icon [icon]="edit" class="mr-3"></fa-icon>
             </button>
             <button class="action-btn text-blue-600 p-5 w-12 h-5">

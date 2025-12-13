@@ -12,37 +12,48 @@ import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.compo
 
 export const routes: Routes = [
 
- {
-    path:"",
-    component:MainLayoutComponent,
-    children:[
+    {
+        path: "",
+        component: MainLayoutComponent,
+        children: [
 
-        {
-            path: "", component: HomeComponent
-        },
-        {
-            path: 'parcels',
-            component: ShowAllParcelComponent
-        },
-        {
-            path: 'users',
-            component: ShowUsersComponent
-        },
-        {
-            path: 'newparcel',
-            component: NewParcelComponent
-        },
-        {
-            path: 'newuser',
-            component: RegisterUserComponent
-        },
-        {
-            path: 'parcel/:trackingNumber',
-            component: ShowParcelComponent
-        },
+            {
+                path: "", component: HomeComponent
+            },
+            {
+                path: 'parcels',
+                component: ShowAllParcelComponent
+            },
+            {
+                path: 'users',
+                component: ShowUsersComponent
+            },
+            {
+                path: 'newParcel',
+                component: NewParcelComponent
+            },
+            {
+                path: 'newuser',
+                component: RegisterUserComponent
+            },
+            {
+                path: 'parcel/:trackingNumber',
+                component: ShowParcelComponent
+            },
 
-    ]
- },
+            {
+                path: 'parcel/view/:trackingNumber',
+                component: ShowParcelComponent,
+                data: { mode: 'view' }
+            },
+            {
+                path: 'parcel/edit/:trackingNumber',
+                component: ShowParcelComponent,
+                data: { mode: 'edit' }
+            }
+
+        ]
+    },
 
 
     // 🔹 Layout WITHOUT header/footer (for login)
@@ -53,8 +64,8 @@ export const routes: Routes = [
             { path: 'login', component: LoginComponent }
         ]
     },
-      {
+    {
         path: "**",
         component: PageNotFoundComponentComponent
-      }
+    }
 ];
