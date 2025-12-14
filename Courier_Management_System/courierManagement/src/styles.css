@@ -2,6 +2,7 @@
 @import "tailwindcss";
 
 
+@custom-variant dark (&:where(.dark, .dark *));
 html {
   height: 100%; /* Ensures the html element spans the full height of the viewport */
   background-color: #000; /* This color will show if the body is smaller than the viewport */
