@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -7,6 +7,7 @@ import {
   faSearch, 
   faBoxOpen 
 } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-all-parcels',
   standalone: true,
@@ -20,6 +21,8 @@ import {
   styleUrls: ['./parcels.component.css']
 })
 export class ParcelsComponent {
+
+   private router = inject(Router);
   
   // Icons
   faArrowLeft = faArrowLeft;
@@ -83,5 +86,9 @@ pageSize: number = 12;
   // Reset page when searching
   filterParcels(): void {
     this.page = 1;
+  }
+
+  routeTo(){
+   this.router.navigate(['/myParcels'])
   }
 }

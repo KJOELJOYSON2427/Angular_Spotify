@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener,ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener,inject,ViewChild } from '@angular/core';
 import { ParcelStatusDirective } from "../../directives/parcel-status.directive";
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 @Component({
   selector: 'app-my-parcels',
   imports: [CommonModule,
@@ -13,6 +13,7 @@ import { RouterLink } from '@angular/router';
 export class MyParcelsComponent {
  
   constructor(private elementRef: ElementRef) {}
+  private router : Router = inject(Router);
   isOpen = false;
 
   toggleDropdown() {
@@ -46,6 +47,7 @@ export class MyParcelsComponent {
 }
 
   parcels: {
+    trackingNumber:string,
     from: string;
     to: string;
     weight: string;
@@ -54,6 +56,7 @@ export class MyParcelsComponent {
     status: string;
   }[] = [
       {
+        trackingNumber:"yuebubub",
         from: '101 Pine St, Seattle, WA 98101',
         to: '707 Chestnut St, New York, NY 10001',
         weight: '20 kg',
@@ -62,6 +65,7 @@ export class MyParcelsComponent {
         status: 'Pending'
       },
       {
+          trackingNumber:"yuebubub",
         from: 'Ontario',
         to: 'Michigan',
         weight: '20 kg',
@@ -70,6 +74,7 @@ export class MyParcelsComponent {
         status: 'Delivered'
       },
       {
+          trackingNumber:"yuebubub",
         from: 'Ontario',
         to: 'Michigan',
         weight: '20 kg',
@@ -78,4 +83,9 @@ export class MyParcelsComponent {
         status: 'Cancelled'
       }
     ];
+
+    navigateToParcelDetail(trackingNumber: string){
+      this.router.navigate(['/parcel', trackingNumber])
+    }
+
 }
