@@ -45,7 +45,7 @@ export const routes: Routes = [
         component: ParcelComponent,
       },
       {
-        path: 'parcel',
+        path: 'parcels',
         component: ParcelsComponent,
       },
     ],

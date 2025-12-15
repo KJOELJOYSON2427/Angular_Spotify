@@ -1,14 +1,49 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener,ViewChild } from '@angular/core';
 import { ParcelStatusDirective } from "../../directives/parcel-status.directive";
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-my-parcels',
   imports: [CommonModule,
+    RouterLink,
     ParcelStatusDirective],
   templateUrl: './my-parcels.component.html',
   styleUrl: './my-parcels.component.css'
 })
 export class MyParcelsComponent {
+ 
+  constructor(private elementRef: ElementRef) {}
+  isOpen = false;
+
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
+  }
+
+ 
+  @ViewChild('profileMenu', { static: true })
+  profileMenu!: ElementRef;
+
+   @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+
+    if (!this.isOpen) return;
+ console.log(event.target,"the ");
+ 
+    const clickedInside =
+      this.profileMenu.nativeElement.contains(event.target);
+
+    if (!clickedInside) {
+      this.isOpen = false;
+    }
+  }
+
+   @HostListener('document:keydown.escape')
+  onEscape() {
+    this.isOpen = false;
+  }
+  closeDropdown() {
+  this.isOpen = false;
+}
 
   parcels: {
     from: string;
