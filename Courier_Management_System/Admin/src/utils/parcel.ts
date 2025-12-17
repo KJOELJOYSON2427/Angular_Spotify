@@ -55,8 +55,19 @@ export type ParcelDashboardRow = {
   // Details
   cost: number;
   note?: string;
+  status:string,
   
   // UI State & Control
   select: boolean;
   actions: 'edit' | 'delete' | 'view' | 'none';
 };
+
+export interface ParcelPageResponse {
+  parcels: ParcelDashboardRow[];
+  currentPage: number;
+  totalItems: number;
+  totalPages: number;
+  pageSize: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+}
