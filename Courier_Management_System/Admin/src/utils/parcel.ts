@@ -67,3 +67,8 @@ export interface ParcelPageResponse {
   hasNext: boolean;
   hasPrevious: boolean;
 }
+
+export interface DeleteResponse {
+  message: string;
+  success: boolean;
+}

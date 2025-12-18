@@ -4,7 +4,7 @@ import { BACKEND_URL } from '../app/app.config';
 import { ParcelCreateRequest } from '../utils/createParcelRequest';
 import { catchError, map, Observable, tap } from 'rxjs';
 import { handleError } from '../error/handleError';
-import { Parcel, ParcelDashboardRow, ParcelPageResponse } from '../utils/parcel';
+import { Parcel, ParcelDashboardRow, ParcelPageResponse ,DeleteResponse} from '../utils/parcel';
 
 type SuccessResponse = string;
 @Injectable({
@@ -120,5 +120,29 @@ export class ParcelsService {
       )
   }
 
+
+  deleteParcelByTrackingNumber(trackingNumber:string):Observable<DeleteResponse>{
+    const url = `${this.apiUrl}/parcel/${trackingNumber}`;
+     return this.http.delete<DeleteResponse>(url);
+  }
+
+
+
+  getParcelByTrackingNumber(trackingNumber: string) {
+  return this.http.get<Parcel>(
+    `${this.apiUrl}/parcel/find/${trackingNumber}`
+  );
+}
+
+
+updateParcelByTrackingNumber(
+  trackingNumber: string,
+  payload: any
+) {
+  return this.http.put<any>(
+    `${this.apiUrl}/parcel/${trackingNumber}`,
+    payload
+  );
+}
   
 }

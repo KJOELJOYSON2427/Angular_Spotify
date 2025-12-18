@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { faEye, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -12,6 +12,7 @@ import {
   faChevronDown,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
+import { ToasterComponent } from '../toaster/toaster.component';
 @Component({
   selector: 'app-show-all-parcel',
   standalone: true,
@@ -19,7 +20,8 @@ import {
     CommonModule,
     RouterLink,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    ToasterComponent
   ],
   templateUrl: './show-all-parcel.component.html',
   styleUrl: './show-all-parcel.component.css'
@@ -52,7 +54,7 @@ currentSortDir: 'asc' | 'desc' = 'desc';
 private searchTimeout: any;
 
   constructor(private parcelService: ParcelsService) {}
-
+ @ViewChild(ToasterComponent) toast!: ToasterComponent;
   ngOnInit(): void {
     this.loadParcels();
   }
@@ -99,10 +101,33 @@ onSearchChange() {
   }, 400);
 }
   // Optional: Add delete functionality later
-  onDelete(trackingNumber: string): void {
+  deleteParcel(trackingNumber: string): void {
     if (confirm('Are you sure you want to delete this parcel?')) {
       // Implement delete logic here
-      console.log('Delete parcel:', trackingNumber);
+
+
+
+      this.parcelService.deleteParcelByTrackingNumber(trackingNumber)
+    .subscribe({
+      next:(res) =>{
+        if (res.success) {
+          // 🔥 SHOW SUCCESS TOAST
+          this.toast.show(res.message, 'success');
+         // Remove deleted row instantly (optional but smooth UX)
+          this.parcels = this.parcels.filter(
+            p => p.trackingNumber !== trackingNumber
+          );
+          console.log('Delete parcel:', trackingNumber);
+        } else {
+          this.toast.show(res.message, 'error');
+        }
+      },
+      error: () => {
+        this.toast.show('Failed to delete parcel', 'error');
+      }
+    })
+      
+
       // After deletion success: this.loadParcels();
     }
   }
