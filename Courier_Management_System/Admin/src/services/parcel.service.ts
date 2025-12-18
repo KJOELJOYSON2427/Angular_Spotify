@@ -5,6 +5,7 @@ import { ParcelCreateRequest } from '../utils/createParcelRequest';
 import { catchError, map, Observable, tap } from 'rxjs';
 import { handleError } from '../error/handleError';
 import { Parcel, ParcelDashboardRow, ParcelPageResponse } from '../utils/parcel';
+
 type SuccessResponse = string;
 @Injectable({
   providedIn: 'root'
@@ -45,13 +46,10 @@ export class ParcelsService {
         // Mapping backend fields to your specific UI type
         cost: p.cost,
         trackingNumber: p.trackingNumber?.toString() || '', // Ensure it's a string for routerLink
-        note: p.note || 'No instructions',
-        sendername: p.senderName,
-        from: p.senderAddress,
-        to: p.recieverAddress,
-        recipientname: p.recieverName, // Note: lowercase 'n' to match your HTML
-        select: false,
-        actions: 'view',
+       
+        senderAddress: p.senderAddress,
+        recieverAddress: p.recieverAddress,
+       
         status:p.status
       }))
     )
@@ -64,13 +62,8 @@ export class ParcelsService {
   private mapToDashboardRow(parcel: Parcel): ParcelDashboardRow {
     return {
       trackingNumber: parcel.trackingNumber,
-      from:parcel.senderAddress,
-      to:parcel.recieverAddress,
-      recipientname: parcel.recieverName, // Note: lowercase 'n' to match your HTML
-        select: false,
-        actions: 'view',
-        note: parcel.note || 'No instructions',
-        sendername: parcel.senderName,
+      senderAddress:parcel.senderAddress,
+      recieverAddress:parcel.recieverAddress,
     cost: parcel.cost,
     status:parcel.status
     };
@@ -80,18 +73,36 @@ export class ParcelsService {
   public getParcelsWithFilter(
     pageNo: number = 0,
     pageSize: number = 10,
-    direction: 'asc' | 'desc' = 'desc'
+    direction: 'asc' | 'desc' = 'desc',
+     sortColumn?: string,
+    searchText?: string,
+    searchColumns?: string[]
+
   ): Observable<ParcelPageResponse>{
   
 
-    const url = `${this.apiUrl}/parcel/h`;
+    const url = `${this.apiUrl}/parcel/h2`;
 
     // Build query parameters
     let params = new HttpParams()
       .set('page', pageNo.toString())
       .set('size', pageSize.toString())
       .set('sortDir', direction);
+     
+      // 2. Add optional sort column
+    if (sortColumn) {
+      params = params.set('sortColumn', sortColumn);
+    }
+      
+    // 3. Add search text
+    if (searchText) {
+      params = params.set('searchText', searchText);
+    }
 
+    // 4. Convert Array ['from', 'to'] to String "from,to"
+    if (searchColumns && searchColumns.length > 0) {
+      params = params.set('searchColumns', searchColumns.join(','));
+    }
 
       return this.http.get<any>(url, {params}).pipe(
         map(

@@ -45,21 +45,17 @@ export type ParcelDashboardRow = {
   trackingNumber: string;
   
   // Locations
-  from: string;
-  to: string;
+  senderAddress: string;
+  recieverAddress: string;
   
-  // People (Matching your HTML template's lowercase naming)
-  sendername: string;      
-  recipientname: string;   
+
   
   // Details
   cost: number;
-  note?: string;
-  status:string,
+  status:string;
   
-  // UI State & Control
-  select: boolean;
-  actions: 'edit' | 'delete' | 'view' | 'none';
+
+ 
 };
 
 export interface ParcelPageResponse {
