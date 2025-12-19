@@ -4,3 +4,15 @@ export interface User {
   email: string;
   no_of_parcels: number;
 }
+
+export interface UserResource {
+
+  id: number;
+
+  fullName: string;
+
+  email: string;
+
+  parcelCount: number;
+
+}

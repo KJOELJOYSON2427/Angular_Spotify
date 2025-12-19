@@ -1,35 +1,40 @@
-import { Component } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import {
   faUser,
   faPlus,
   faBox,
   faChartLine,
   faTrash,
-  faEnvelope
+  faEnvelope,
+  faSearch,
+  faTimes,
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
-import { MatCheckboxModule } from '@angular/material/checkbox'; 
-import { User } from '../../utils/user.model';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms'; // <-- Add this for ngModel
+import {  UserResource } from '../../utils/user.model';
 import { UserService } from '../../services/user.service';
+
 @Component({
   selector: 'app-show-users',
-  imports: [RouterLink, 
-    CommonModule, 
+  standalone: true,
+  imports: [
+    RouterLink,
+    CommonModule,
     MatCheckboxModule,
-    FontAwesomeModule],
+    FontAwesomeModule,
+    FormsModule  // <-- Required for [(ngModel)]
+  ],
   templateUrl: './show-users.component.html',
   styleUrl: './show-users.component.css'
 })
-export class ShowUsersComponent {
-
-
-    constructor(private userService: UserService) {}
-
-users: User[] = [];
-  loading = false;
-
+export class ShowUsersComponent implements OnInit {
   // Icons
   userIcon = faUser;
   plus = faPlus;
@@ -37,79 +42,46 @@ users: User[] = [];
   trash = faTrash;
   chart = faChartLine;
   envelope = faEnvelope;
-  // displayedColumns: string[] = [
-  //   'SI.No.',
-  //  'Name',
-  //  'email',
-  //  'Number_Of_Parcels',
-  //  'Action'
-    
-  // ]
-ngOnInit(): void {
+  faSearch = faSearch;
+  faTimes = faTimes;
+  faAngleLeft = faAngleLeft;
+  faAngleRight = faAngleRight;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
+
+  users: UserResource[] = [];
+  loading = false;
+  page = 0;
+  size = 9;
+  emailFilter = '';
+  idFilter?: number;
+  searchQuery: string = '';
+  sortDir: 'asc' | 'desc' = 'desc';
+  totalElements = 0;
+  totalPages = 0;
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
     this.fetchUsers();
   }
 
-
-//   users = [
-//   {
-//     fullName: "Akshay Kanan",
-//     email: "akshay@hmail.com",
-//     no_of_parcels: 4
-//   },
-//   {
-//     fullName: "Priya Sharma",
-//     email: "priya.sharma@gmail.com",
-//     no_of_parcels: 2
-//   },
-//   {
-//     fullName: "Rajesh Kumar",
-//     email: "rajesh.k@yahoo.com",
-//     no_of_parcels: 7
-//   },
-//   {
-//     fullName: "Meera Patel",
-//     email: "meera.patel@outlook.com",
-//     no_of_parcels: 1
-//   },
-//   {
-//     fullName: "Vijay Menon",
-//     email: "vijay.menon@hmail.com",
-//     no_of_parcels: 5
-//   },
-//   {
-//     fullName: "Anjali Reddy",
-//     email: "anjali.reddy@gmail.com",
-//     no_of_parcels: 3
-//   },
-//   {
-//     fullName: "Karthik Krishnan",
-//     email: "karthik.k@mail.com",
-//     no_of_parcels: 6
-//   },
-//   {
-//     fullName: "Divya Iyer",
-//     email: "divya.iyer@hotmail.com",
-//     no_of_parcels: 2
-//   },
-//   {
-//     fullName: "Arjun Nair",
-//     email: "arjun.nair@yahoo.in",
-//     no_of_parcels: 8
-//   },
-//   {
-//     fullName: "Sneha Gupta",
-//     email: "sneha.g@gmail.com",
-//     no_of_parcels: 4
-//   }
-// ]
-
-fetchUsers() {
-
-  this.userService.getAllUsers().subscribe({
+  fetchUsers() {
+    this.loading = true;
+    console.log(this.idFilter);
+    
+    this.userService.getAllUsers(
+      this.page,
+      this.size,
+      this.emailFilter,
+      this.idFilter,
+      this.sortDir
+    ).subscribe({
       next: (res) => {
-        console.log(res.data);
-        
-        this.users = res.data || [];
+        const pageData = res.data;
+        this.users = pageData.content;
+        this.totalElements = pageData.totalElements;
+        this.totalPages = pageData.totalPages;
         this.loading = false;
       },
       error: (err) => {
@@ -117,17 +89,65 @@ fetchUsers() {
         this.loading = false;
       }
     });
-}
+  }
 
+  onSearch() {
+    const query = this.searchQuery.trim();
+  
+  // Reset filters
+  this.emailFilter = '';
+  this.idFilter = undefined;
+    if (!query) {
+    this.fetchUsers();
+    return;
+   }
+ 
+  // Check if the input is a number (for ID)
+  if (!isNaN(Number(query))) {
+    this.idFilter = Number(query);
+  } else {
+    // Treat it as an email string
+    this.emailFilter = query;
+  }
+    this.page = 0; // Reset to first page on search
+    this.fetchUsers();
+  }
 
-getTotalParcels(): number {
-  return this.users.reduce((sum, user) => sum + user.no_of_parcels, 0);
-}
+  onClearFilters() {
+    this.emailFilter = '';
+    this.idFilter = undefined;
+    this.page = 0;
+    this.fetchUsers();
+  }
 
-getAvgParcels(): string {
-  const avg = this.getTotalParcels() / this.users.length;
-  return avg.toFixed(1);
-}
+  goToPage(pageNum: number) {
+    if (pageNum >= 0 && pageNum < this.totalPages && pageNum !== this.page) {
+      this.page = pageNum;
+      this.fetchUsers();
+    }
+  }
 
+  // Show max 5 page buttons intelligently
+  getVisiblePages(): number[] {
+    const maxButtons = 5;
+    let start = Math.max(0, this.page - Math.floor(maxButtons / 2));
+    let end = start + maxButtons;
 
+    if (end > this.totalPages) {
+      end = this.totalPages;
+      start = Math.max(0, end - maxButtons);
+    }
+
+    return Array.from({ length: end - start }, (_, i) => start + i);
+  }
+
+  getTotalParcels(): number {
+    return this.users.reduce((sum, user) => sum + user.parcelCount, 0);
+  }
+
+  getAvgParcels(): string {
+    if (this.users.length === 0) return '0.0';
+    const avg = this.getTotalParcels() / this.users.length;
+    return avg.toFixed(1);
+  }
 }

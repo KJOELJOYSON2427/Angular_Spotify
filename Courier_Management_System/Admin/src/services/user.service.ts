@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CreateUserRequest } from '../utils/create-user-request.model';
@@ -21,7 +21,32 @@ export class UserService {
 
 
 
-  getAllUsers(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user/`);
+  // getAllUsers(): Observable<any> {
+  //   return this.http.get(`${this.baseUrl}/user/`);
+  // }
+
+
+  getAllUsers(
+  page: number,
+  size: number,
+  email?: string,
+  id?: number,
+  sortDir: 'asc' | 'desc' = 'desc'
+): Observable<any> {
+   let params = new HttpParams()
+    .set('page', page)
+    .set('size', size)
+    .set('sortBy', 'createdAt')
+    .set('sortDir', sortDir);
+
+  if (email) {
+    params = params.set('email', email);
   }
+
+  if (id) {
+    params = params.set('id', id);
+  }
+
+  return this.http.get(`${this.baseUrl}/user`, { params });
+}
 }

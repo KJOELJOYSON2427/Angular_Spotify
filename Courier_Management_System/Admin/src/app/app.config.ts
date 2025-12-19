@@ -45,6 +45,7 @@ export const appConfig: ApplicationConfig = {
         BarController
       ]
     }),
+    
     provideHttpClient(),
     
   ]
